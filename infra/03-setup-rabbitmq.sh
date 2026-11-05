@@ -29,3 +29,4 @@ RABBIT_HOST="$DNS_LABEL.$LOC.azurecontainer.io"
 echo "==> RabbitMQ disponible en: $RABBIT_HOST:5672"
 echo "==> Panel de administración: http://$RABBIT_HOST:15672"
 echo "==> Usuario: arepas"
+

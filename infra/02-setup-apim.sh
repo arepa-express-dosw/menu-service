@@ -51,3 +51,4 @@ if [ -f "$POLICY_FILE" ]; then
 fi
 
 echo "==> Configuración de APIM completada."
+
