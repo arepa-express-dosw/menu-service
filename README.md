@@ -1,28 +1,27 @@
 # menu-service
 
-Arepa Express menu microservice. Spring Boot 3.5, Java 21, Maven.
+Servicio encargado de exponer el catálogo y precios de las arepas en Arepa Express. Desarrollado con Spring Boot 3.5, Java 21 y Maven.
 
 ## Endpoints
 
-| Method | Path | Description |
+| Método | Ruta | Descripción |
 |---|---|---|
-| GET | `/menu` | Returns the arepa menu |
-| GET | `/v3/api-docs` | OpenAPI document |
-| GET | `/swagger-ui.html` | Swagger UI |
+| GET | `/menu` | Lista de arepas con id, nombre y precio |
+| GET | `/v3/api-docs` | Especificación OpenAPI 3.1 |
+| GET | `/swagger-ui.html` | Interfaz interactiva Swagger UI |
 
-## Run locally
+## Ejecución local
 
 ```bash
 mvn spring-boot:run
 curl http://localhost:8080/menu
 ```
 
-## Build and container
+## Empaquetado y contenedor
 
 ```bash
 mvn package
 docker build -t menu-service .
 ```
 
-The container listens on port 8080 and is deployed to Azure Container Apps as `menu-service`,
-behind the API Management gateway (`/menu-api/menu`).
+El contenedor expone el puerto 8080 y se encuentra publicado en Azure Container Apps bajo el nombre `menu-service`, enrutado a través del API Gateway en `/menu-api/menu`.

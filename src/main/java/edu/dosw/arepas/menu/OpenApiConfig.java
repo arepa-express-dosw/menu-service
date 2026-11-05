@@ -13,6 +13,6 @@ public class OpenApiConfig {
         return new OpenAPI().info(new Info()
                 .title("Arepa Express - Menu API")
                 .version("1.0.0")
-                .description("Consulta del menu de arepas."));
+                .description("Catálogo de arepas y precios disponibles."));
     }
 }

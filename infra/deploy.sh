@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# ==============================================================================
-# deploy.sh - Despliegue de menu-service en Azure Container Apps
-# ==============================================================================
 set -euo pipefail
 
 NOMBRE="${NOMBRE:-oscarlasso}"
@@ -9,16 +6,13 @@ RG="${RG:-rg-arepas-$NOMBRE}"
 LOC="${LOC:-northcentralus}"
 APP_NAME="menu-service"
 
-echo "==> Desplegando $APP_NAME en Azure Container Apps ($RG / arepas-env)..."
+echo "Desplegando $APP_NAME en Container Apps..."
 
-# Obtener ACR y credenciales dinámicamente sin quemar secretos en git
 ACR_SERVER=$(az acr list -g "$RG" --query "[0].loginServer" -o tsv)
 ACR_NAME="${ACR_SERVER%%.*}"
 ACR_USER=$(az acr credential show -n "$ACR_NAME" --query "username" -o tsv)
 ACR_PASS=$(az acr credential show -n "$ACR_NAME" --query "passwords[0].value" -o tsv)
 IMAGE="$ACR_SERVER/$APP_NAME:latest"
-
-echo "==> Usando imagen: $IMAGE"
 
 az containerapp up --name "$APP_NAME" --resource-group "$RG" --location "$LOC" \
   --environment arepas-env --image "$IMAGE" \
@@ -26,6 +20,5 @@ az containerapp up --name "$APP_NAME" --resource-group "$RG" --location "$LOC" \
   --ingress external --target-port 8080
 
 MENU_FQDN=$(az containerapp show -n "$APP_NAME" -g "$RG" --query properties.configuration.ingress.fqdn -o tsv)
-echo "==> $APP_NAME desplegado con éxito en: https://$MENU_FQDN"
-echo "==> Probando endpoint GET /menu:"
+echo "$APP_NAME desplegado en: https://$MENU_FQDN"
 curl -s -i "https://$MENU_FQDN/menu" || true
